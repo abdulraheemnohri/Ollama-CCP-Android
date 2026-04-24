@@ -3,6 +3,7 @@ package com.ollama.ccp.chat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ollama.ccp.core.LLMEngine
+import com.ollama.ccp.core.TokenCallback
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -18,12 +19,24 @@ class ChatViewModel(private val llmEngine: LLMEngine) : ViewModel() {
         val userMsg = Message("user", content)
         _messages.value = _messages.value + userMsg
 
+        val assistantMsgIndex = _messages.value.size
+        _messages.value = _messages.value + Message("assistant", "")
+
+        _isGenerating.value = true
+
         viewModelScope.launch {
-            _isGenerating.value = true
-            val response = llmEngine.chat(content)
-            val assistantMsg = Message("assistant", response)
-            _messages.value = _messages.value + assistantMsg
-            _isGenerating.value = false
+            llmEngine.chatStream(content, object : TokenCallback {
+                override fun onToken(token: String) {
+                    val currentMessages = _messages.value.toMutableList()
+                    val msg = currentMessages[assistantMsgIndex]
+                    currentMessages[assistantMsgIndex] = msg.copy(content = msg.content + token)
+                    _messages.value = currentMessages
+                }
+
+                override fun onComplete() {
+                    _isGenerating.value = false
+                }
+            })
         }
     }
 }

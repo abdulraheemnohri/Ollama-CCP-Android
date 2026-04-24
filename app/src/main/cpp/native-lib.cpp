@@ -13,7 +13,7 @@ static llama_model* g_model = nullptr;
 static llama_context* g_context = nullptr;
 
 extern "C" JNIEXPORT jboolean JNICALL
-Java_com_ollama_ccp_core_LLMEngine_loadModel(JNIEnv* env, jobject thiz, jstring modelPath) {
+Java_com_ollama_ccp_core_LLMEngine_loadModel(JNIEnv* env, jobject thiz, jstring modelPath, jint n_ctx, jint n_threads) {
     const char* path = env->GetStringUTFChars(modelPath, nullptr);
 
     llama_backend_init();
@@ -29,8 +29,8 @@ Java_com_ollama_ccp_core_LLMEngine_loadModel(JNIEnv* env, jobject thiz, jstring 
     }
 
     llama_context_params ctx_params = llama_context_default_params();
-    ctx_params.n_ctx = 2048;
-    ctx_params.n_threads = 4;
+    ctx_params.n_ctx = n_ctx;
+    ctx_params.n_threads = n_threads;
 
     g_context = llama_init_from_model(g_model, ctx_params);
     if (!g_context) {
@@ -40,7 +40,7 @@ Java_com_ollama_ccp_core_LLMEngine_loadModel(JNIEnv* env, jobject thiz, jstring 
         return JNI_FALSE;
     }
 
-    LOGI("Model loaded successfully");
+    LOGI("Model loaded successfully with ctx=%d threads=%d", n_ctx, n_threads);
     return JNI_TRUE;
 }
 
@@ -57,18 +57,28 @@ Java_com_ollama_ccp_core_LLMEngine_unloadModel(JNIEnv* env, jobject thiz) {
     llama_backend_free();
 }
 
-extern "C" JNIEXPORT jstring JNICALL
-Java_com_ollama_ccp_core_LLMEngine_generate(JNIEnv* env, jobject thiz, jstring prompt) {
-    if (!g_context) return env->NewStringUTF("Error: Model not loaded");
+extern "C" JNIEXPORT void JNICALL
+Java_com_ollama_ccp_core_LLMEngine_generateStreaming(JNIEnv* env, jobject thiz, jstring prompt, jobject callback) {
+    if (!g_context) return;
+
+    jclass callbackClass = env->GetObjectClass(callback);
+    jmethodID onTokenMethod = env->GetMethodID(callbackClass, "onToken", "(Ljava/lang/String;)V");
+    jmethodID onCompleteMethod = env->GetMethodID(callbackClass, "onComplete", "()V");
 
     const char* p_prompt = env->GetStringUTFChars(prompt, nullptr);
 
-    // Minimal generation logic for verification
-    // In a real app, this would be a loop with streaming callbacks
+    // Minimal loop simulation for now
+    // Real implementation would use llama_decode and sampler
+    std::string mock_tokens[] = {"Streaming", " from", " native", " code..."};
+    for (const auto& t : mock_tokens) {
+        jstring jtoken = env->NewStringUTF(t.c_str());
+        env->CallVoidMethod(callback, onTokenMethod, jtoken);
+        env->DeleteLocalRef(jtoken);
+        // Sleep a bit to simulate processing
+        // usleep(100000);
+    }
 
-    std::string result = "Native echo: ";
-    result += p_prompt;
+    env->CallVoidMethod(callback, onCompleteMethod);
 
     env->ReleaseStringUTFChars(prompt, p_prompt);
-    return env->NewStringUTF(result.c_str());
 }

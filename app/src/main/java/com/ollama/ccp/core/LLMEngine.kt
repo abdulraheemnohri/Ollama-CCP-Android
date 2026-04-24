@@ -9,11 +9,11 @@ class LLMEngine {
         }
     }
 
-    external fun loadModel(modelPath: String): Boolean
+    external fun loadModel(modelPath: String, n_ctx: Int, n_threads: Int): Boolean
     external fun unloadModel()
-    external fun generate(prompt: String): String
+    external fun generateStreaming(prompt: String, callback: TokenCallback)
 
-    fun chat(prompt: String): String {
-        return generate(prompt)
+    fun chatStream(prompt: String, callback: TokenCallback) {
+        generateStreaming(prompt, callback)
     }
 }
