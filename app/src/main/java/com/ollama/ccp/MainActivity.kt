@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.ollama.ccp.chat.ChatScreen
 import com.ollama.ccp.chat.ChatViewModel
 import com.ollama.ccp.core.*
+import com.ollama.ccp.db.AppDatabase
 import com.ollama.ccp.models.ModelScreen
 import com.ollama.ccp.settings.SettingsRepository
 import com.ollama.ccp.settings.SettingsScreen
@@ -19,10 +20,12 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
     private val llmEngine = LLMEngine()
     private val localServer = LocalServer(llmEngine)
+    private lateinit var modelManager: ModelManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val chatViewModel = ChatViewModel(llmEngine)
+        val chatViewModel = ChatViewModel(llmEngine, AppDatabase.getDatabase(this).chatDao())
+        modelManager = ModelManager(this)
         val settingsRepository = SettingsRepository(this)
         val systemMonitor = SystemMonitor(this)
 
@@ -30,6 +33,7 @@ class MainActivity : ComponentActivity() {
             var currentScreen by remember { mutableStateOf("chat") }
             val contextSize by settingsRepository.contextSize.collectAsState(initial = 2048)
             val threadCount by settingsRepository.threadCount.collectAsState(initial = 4)
+            val temp by settingsRepository.temperature.collectAsState(initial = 0.7f)
             val scope = rememberCoroutineScope()
             val memStats = remember { mutableStateOf(systemMonitor.getMemoryInfo()) }
 
@@ -58,16 +62,20 @@ class MainActivity : ComponentActivity() {
                     Box(modifier = Modifier.padding(padding)) {
                         when (currentScreen) {
                             "chat" -> ChatScreen(chatViewModel)
-                            "models" -> ModelScreen(emptyList()) { /* Download */ }
+                            "models" -> ModelScreen(
+                                models = modelManager.listModels(),
+                                modelsDir = modelManager.getModelsDir()
+                            ) { file -> modelManager.deleteModel(file) }
                             "settings" -> SettingsScreen(
                                 contextSize = contextSize,
                                 onContextSizeChange = { scope.launch { settingsRepository.updateContextSize(it) } },
                                 threadCount = threadCount,
-                                onThreadCountChange = { scope.launch { settingsRepository.updateThreadCount(it) } }
+                                onThreadCountChange = { scope.launch { settingsRepository.updateThreadCount(it) } },
+                                temp = temp,
+                                onTempChange = { scope.launch { settingsRepository.updateTemperature(it) } }
                             )
                         }
 
-                        // Mini Monitor at top
                         Text(
                             "RAM: ${memStats.value.availableMemory / 1024 / 1024} MB free",
                             modifier = Modifier.padding(4.dp),

@@ -12,7 +12,9 @@ fun SettingsScreen(
     contextSize: Int,
     onContextSizeChange: (Int) -> Unit,
     threadCount: Int,
-    onThreadCountChange: (Int) -> Unit
+    onThreadCountChange: (Int) -> Unit,
+    temp: Float,
+    onTempChange: (Float) -> Unit
 ) {
     Scaffold(
         topBar = { TopAppBar(title = { Text("Settings") }) }
@@ -35,6 +37,14 @@ fun SettingsScreen(
                 onValueChange = { onThreadCountChange(it.toInt()) },
                 valueRange = 1f..16f,
                 steps = 15
+            )
+
+            Text("Temperature: $temp")
+            Slider(
+                value = temp,
+                onValueChange = { onTempChange(it) },
+                valueRange = 0f..2f,
+                steps = 20
             )
 
             Spacer(modifier = Modifier.height(16.dp))

@@ -15,4 +15,6 @@ interface ChatDao {
 
     @Query("DELETE FROM chats WHERE sessionId = :sessionId")
     suspend fun deleteSession(sessionId: String)
+    @Query("SELECT DISTINCT sessionId FROM chats")
+    fun getAllSessionIds(): Flow<List<String>>
 }

@@ -4,39 +4,56 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ollama.ccp.core.LLMEngine
 import com.ollama.ccp.core.TokenCallback
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.ollama.ccp.db.ChatDao
+import com.ollama.ccp.db.ChatEntity
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.UUID
 
-class ChatViewModel(private val llmEngine: LLMEngine) : ViewModel() {
-    private val _messages = MutableStateFlow<List<Message>>(emptyList())
-    val messages = _messages.asStateFlow()
+class ChatViewModel(private val llmEngine: LLMEngine, private val chatDao: ChatDao) : ViewModel() {
+    private val _currentSessionId = MutableStateFlow(UUID.randomUUID().toString())
+    val currentSessionId = _currentSessionId.asStateFlow()
+
+    val messages = _currentSessionId.flatMapLatest { sessionId ->
+        chatDao.getMessagesForSession(sessionId)
+    }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    val sessions = chatDao.getAllSessionIds().stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     private val _isGenerating = MutableStateFlow(false)
     val isGenerating = _isGenerating.asStateFlow()
 
     fun sendMessage(content: String) {
-        val userMsg = Message("user", content)
-        _messages.value = _messages.value + userMsg
-
-        val assistantMsgIndex = _messages.value.size
-        _messages.value = _messages.value + Message("assistant", "")
-
-        _isGenerating.value = true
-
         viewModelScope.launch {
+            val sessionId = _currentSessionId.value
+            chatDao.insertMessage(ChatEntity(sessionId = sessionId, role = "user", content = content))
+
+            _isGenerating.value = true
+            var assistantContent = ""
+
             llmEngine.chatStream(content, object : TokenCallback {
                 override fun onToken(token: String) {
-                    val currentMessages = _messages.value.toMutableList()
-                    val msg = currentMessages[assistantMsgIndex]
-                    currentMessages[assistantMsgIndex] = msg.copy(content = msg.content + token)
-                    _messages.value = currentMessages
+                    assistantContent += token
+                    // For performance, we might want to buffer or only update UI,
+                    // but for Room we usually wait for complete or update periodically.
+                    // Here we'll just update a local state for the UI to be snappy
                 }
 
                 override fun onComplete() {
-                    _isGenerating.value = false
+                    viewModelScope.launch {
+                        chatDao.insertMessage(ChatEntity(sessionId = sessionId, role = "assistant", content = assistantContent))
+                        _isGenerating.value = false
+                    }
                 }
             })
         }
+    }
+
+    fun selectSession(sessionId: String) {
+        _currentSessionId.value = sessionId
+    }
+
+    fun newSession() {
+        _currentSessionId.value = UUID.randomUUID().toString()
     }
 }

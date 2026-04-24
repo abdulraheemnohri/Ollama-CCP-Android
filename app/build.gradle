@@ -66,6 +66,8 @@ android {
 }
 
 dependencies {
+    // Markdown support
+    implementation 'com.mikepenz:multiplatform-markdown-renderer-m3:0.25.0'
     testImplementation "io.ktor:ktor-server-tests-jvm:2.3.11"
     // Ktor for Local Server
     def ktor_version = "2.3.11"
