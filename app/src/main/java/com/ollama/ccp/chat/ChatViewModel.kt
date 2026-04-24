@@ -54,6 +54,12 @@ class ChatViewModel(private val llmEngine: LLMEngine, private val chatDao: ChatD
     }
 
     fun newSession() {
+    fun exportSessionAsMarkdown(sessionId: String): String {
+        val currentMessages = messages.value
+        return currentMessages.joinToString("\n\n") {
+            "**${it.role.uppercase()}**:\n${it.content}"
+        }
+    }
         _currentSessionId.value = UUID.randomUUID().toString()
     }
 }

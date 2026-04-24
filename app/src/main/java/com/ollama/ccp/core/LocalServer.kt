@@ -32,6 +32,7 @@ class LocalServer(private val llmEngine: LLMEngine) {
             install(ContentNegotiation) {
                 json(Json {
                     prettyPrint = true
+                    encodeDefaults = true
                     isLenient = true
                 })
             }

@@ -16,16 +16,24 @@ import com.ollama.ccp.models.ModelScreen
 import com.ollama.ccp.settings.SettingsRepository
 import com.ollama.ccp.settings.SettingsScreen
 import kotlinx.coroutines.launch
+import android.speech.tts.TextToSpeech
+import java.util.Locale
 
 class MainActivity : ComponentActivity() {
     private val llmEngine = LLMEngine()
     private val localServer = LocalServer(llmEngine)
     private lateinit var modelManager: ModelManager
+    private var tts: TextToSpeech? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val chatViewModel = ChatViewModel(llmEngine, AppDatabase.getDatabase(this).chatDao())
         modelManager = ModelManager(this)
+        tts = TextToSpeech(this) { status ->
+            if (status != TextToSpeech.ERROR) {
+                tts?.language = Locale.US
+            }
+        }
         val settingsRepository = SettingsRepository(this)
         val systemMonitor = SystemMonitor(this)
 
@@ -90,6 +98,8 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onDestroy() {
+        tts?.stop()
+        tts?.shutdown()
         super.onDestroy()
         localServer.stop()
         llmEngine.unloadModel()

@@ -2,7 +2,9 @@ package com.ollama.ccp.core
 
 import android.app.ActivityManager
 import android.content.Context
-import android.os.Debug
+import android.os.BatteryManager
+import android.content.Intent
+import android.content.IntentFilter
 
 class SystemMonitor(private val context: Context) {
     fun getMemoryInfo(): MemoryStats {
@@ -16,6 +18,11 @@ class SystemMonitor(private val context: Context) {
             threshold = memoryInfo.threshold,
             lowMemory = memoryInfo.lowMemory
         )
+    }
+
+    fun getBatteryLevel(): Int {
+        val intent = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        return intent?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) ?: -1
     }
 
     data class MemoryStats(

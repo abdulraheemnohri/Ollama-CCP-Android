@@ -12,6 +12,7 @@ class LLMEngine {
     external fun loadModel(modelPath: String, n_ctx: Int, n_threads: Int): Boolean
     external fun unloadModel()
     external fun generateStreaming(prompt: String, callback: TokenCallback)
+    external fun analyzeImage(imageData: ByteArray, prompt: String, callback: TokenCallback)
 
     fun chatStream(prompt: String, callback: TokenCallback) {
         generateStreaming(prompt, callback)
