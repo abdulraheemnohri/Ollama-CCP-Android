@@ -1,0 +1,214 @@
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:configureCMakeDebug[arm64-v8a]
+> Task :app:buildCMakeDebug[arm64-v8a]
+C/C++: ninja: Entering directory `/app/app/.cxx/Debug/4a1x5r43/arm64-v8a'
+C/C++: : && /opt/android-sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++ --target=aarch64-none-linux-android24 --sysroot=/opt/android-sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/linux-x86_64/sysroot -fPIC -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++11 -fno-limit-debug-info  -static-libstdc++ -Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--no-undefined-version -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments -shared -Wl,-soname,libollamaccp.so -o /app/app/build/intermediates/cxx/Debug/4a1x5r43/obj/arm64-v8a/libollamaccp.so CMakeFiles/ollamaccp.dir/native-lib.cpp.o  bin/libllama.so  -lcommon  -llog  bin/libggml.so  bin/libggml-cpu.so  bin/libggml-base.so  -latomic -lm && :
+C/C++: ld.lld: error: unable to find library -lcommon
+C/C++: clang++: error: linker command failed with exit code 1 (use -v to see invocation)
+C/C++: ninja: build stopped: subcommand failed.
+
+> Task :app:buildCMakeDebug[arm64-v8a] FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:buildCMakeDebug[arm64-v8a]'.
+> com.android.ide.common.process.ProcessException: ninja: Entering directory `/app/app/.cxx/Debug/4a1x5r43/arm64-v8a'
+  [1/172] Building C object llama_build/ggml/src/CMakeFiles/ggml-base.dir/ggml-alloc.c.o
+  [2/172] Building C object llama_build/ggml/src/CMakeFiles/ggml-base.dir/ggml.c.o
+  [3/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml-base.dir/ggml.cpp.o
+  [4/172] Building CXX object CMakeFiles/ollamaccp.dir/native-lib.cpp.o
+  [5/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml-base.dir/ggml-backend.cpp.o
+  [6/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml-base.dir/ggml-threading.cpp.o
+  [7/172] Building C object llama_build/ggml/src/CMakeFiles/ggml-base.dir/ggml-quants.c.o
+  [8/172] Building C object llama_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu.c.o
+  [9/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml-base.dir/ggml-opt.cpp.o
+  [10/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml.dir/ggml-backend-dl.cpp.o
+  [11/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/hbm.cpp.o
+  [12/172] Building C object llama_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/quants.c.o
+  [13/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml-base.dir/ggml-backend-meta.cpp.o
+  [14/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/ggml-cpu.cpp.o
+  [15/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml.dir/ggml-backend-reg.cpp.o
+  [16/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/traits.cpp.o
+  [17/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/amx/amx.cpp.o
+  [18/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/repack.cpp.o
+  [19/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/amx/mmq.cpp.o
+  [20/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml-base.dir/gguf.cpp.o
+  [21/172] Linking CXX shared library bin/libggml-base.so
+  [22/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/binary-ops.cpp.o
+  [23/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/vec.cpp.o
+  [24/172] Building C object llama_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/arch/arm/quants.c.o
+  [25/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/llamafile/sgemm.cpp.o
+  [26/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/unary-ops.cpp.o
+  [27/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/arch/arm/repack.cpp.o
+  [28/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-arch.cpp.o
+  [29/172] Building CXX object llama_build/ggml/src/CMakeFiles/ggml-cpu.dir/ggml-cpu/ops.cpp.o
+  [30/172] Linking CXX shared library bin/libggml-cpu.so
+  [31/172] Linking CXX shared library bin/libggml.so
+  [32/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-cparams.cpp.o
+  [33/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-adapter.cpp.o
+  [34/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama.cpp.o
+  [35/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-chat.cpp.o
+  [36/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-batch.cpp.o
+  [37/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-hparams.cpp.o
+  [38/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-impl.cpp.o
+  [39/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-io.cpp.o
+  [40/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-context.cpp.o
+  [41/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-memory.cpp.o
+  [42/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-graph.cpp.o
+  [43/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-grammar.cpp.o
+  [44/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-kv-cache-iswa.cpp.o
+  [45/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-mmap.cpp.o
+  [46/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-memory-hybrid.cpp.o
+  [47/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-memory-hybrid-iswa.cpp.o
+  [48/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-kv-cache.cpp.o
+  [49/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-model-saver.cpp.o
+  [50/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-memory-recurrent.cpp.o
+  [51/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-model-loader.cpp.o
+  [52/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/unicode-data.cpp.o
+  [53/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-sampler.cpp.o
+  [54/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/afmoe.cpp.o
+  [55/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-quant.cpp.o
+  [56/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/apertus.cpp.o
+  [57/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-vocab.cpp.o
+  [58/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/arcee.cpp.o
+  [59/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/arctic.cpp.o
+  [60/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/baichuan.cpp.o
+  [61/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/arwkv7.cpp.o
+  [62/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/bailingmoe.cpp.o
+  [63/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/bert.cpp.o
+  [64/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/bailingmoe2.cpp.o
+  [65/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/bitnet.cpp.o
+  [66/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/unicode.cpp.o
+  [67/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/bloom.cpp.o
+  [68/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/chameleon.cpp.o
+  [69/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/chatglm.cpp.o
+  [70/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/cogvlm.cpp.o
+  [71/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/codeshell.cpp.o
+  [72/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/llama-model.cpp.o
+  [73/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/command-r.cpp.o
+  [74/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/cohere2-iswa.cpp.o
+  [75/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/dbrx.cpp.o
+  [76/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/deepseek2.cpp.o
+  [77/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/deepseek.cpp.o
+  [78/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/deci.cpp.o
+  [79/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/dots1.cpp.o
+  [80/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/delta-net-base.cpp.o
+  [81/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/dream.cpp.o
+  [82/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/ernie4-5-moe.cpp.o
+  [83/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/eurobert.cpp.o
+  [84/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/ernie4-5.cpp.o
+  [85/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/exaone.cpp.o
+  [86/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/exaone-moe.cpp.o
+  [87/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/exaone4.cpp.o
+  [88/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/falcon-h1.cpp.o
+  [89/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/falcon.cpp.o
+  [90/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/gemma-embedding.cpp.o
+  [91/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/gemma2-iswa.cpp.o
+  [92/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/gemma.cpp.o
+  [93/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/gemma3.cpp.o
+  [94/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/gemma4-iswa.cpp.o
+  [95/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/gemma3n-iswa.cpp.o
+  [96/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/glm4-moe.cpp.o
+  [97/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/glm4.cpp.o
+  [98/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/gpt2.cpp.o
+  [99/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/gptneox.cpp.o
+  [100/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/granite-hybrid.cpp.o
+  [101/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/granite.cpp.o
+  [102/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/grovemoe.cpp.o
+  [103/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/grok.cpp.o
+  [104/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/hunyuan-dense.cpp.o
+  [105/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/internlm2.cpp.o
+  [106/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/hunyuan-moe.cpp.o
+  [107/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/jais.cpp.o
+  [108/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/jais2.cpp.o
+  [109/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/jamba.cpp.o
+  [110/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/kimi-linear.cpp.o
+  [111/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/llada.cpp.o
+  [112/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/llada-moe.cpp.o
+  [113/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/llama.cpp.o
+  [114/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/llama4.cpp.o
+  [115/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/lfm2.cpp.o
+  [116/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/maincoder.cpp.o
+  [117/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/mamba.cpp.o
+  [118/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/mamba-base.cpp.o
+  [119/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/mimo2-iswa.cpp.o
+  [120/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/minicpm3.cpp.o
+  [121/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/minimax-m2.cpp.o
+  [122/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/mistral3.cpp.o
+  [123/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/modern-bert.cpp.o
+  [124/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/mpt.cpp.o
+  [125/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/nemotron-h.cpp.o
+  [126/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/nemotron.cpp.o
+  [127/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/neo-bert.cpp.o
+  [128/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/olmo.cpp.o
+  [129/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/olmo2.cpp.o
+  [130/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/openelm.cpp.o
+  [131/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/olmoe.cpp.o
+  [132/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/openai-moe-iswa.cpp.o
+  [133/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/orion.cpp.o
+  [134/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/paddleocr.cpp.o
+  [135/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/phi2.cpp.o
+  [136/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/pangu-embedded.cpp.o
+  [137/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/phi3.cpp.o
+  [138/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/plamo.cpp.o
+  [139/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/plm.cpp.o
+  [140/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/plamo3.cpp.o
+  [141/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/plamo2.cpp.o
+  [142/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/qwen.cpp.o
+  [143/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/qwen2.cpp.o
+  [144/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/qwen2moe.cpp.o
+  [145/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/qwen3.cpp.o
+  [146/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/qwen35moe.cpp.o
+  [147/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/qwen2vl.cpp.o
+  [148/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/qwen35.cpp.o
+  [149/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/qwen3moe.cpp.o
+  [150/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/qwen3next.cpp.o
+  [151/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/refact.cpp.o
+  [152/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/qwen3vl-moe.cpp.o
+  [153/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/qwen3vl.cpp.o
+  [154/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/rnd1.cpp.o
+  [155/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/rwkv6.cpp.o
+  [156/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/rwkv6-base.cpp.o
+  [157/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/rwkv7.cpp.o
+  [158/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/rwkv6qwen2.cpp.o
+  [159/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/rwkv7-base.cpp.o
+  [160/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/seed-oss.cpp.o
+  [161/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/smallthinker.cpp.o
+  [162/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/smollm3.cpp.o
+  [163/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/starcoder.cpp.o
+  [164/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/stablelm.cpp.o
+  [165/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/starcoder2.cpp.o
+  [166/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/step35-iswa.cpp.o
+  [167/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/t5.cpp.o
+  [168/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/t5encoder.cpp.o
+  [169/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/xverse.cpp.o
+  [170/172] Building CXX object llama_build/src/CMakeFiles/llama.dir/models/wavtokenizer-dec.cpp.o
+  [171/172] Linking CXX shared library bin/libllama.so
+  [172/172] Linking CXX shared library /app/app/build/intermediates/cxx/Debug/4a1x5r43/obj/arm64-v8a/libollamaccp.so
+  FAILED: /app/app/build/intermediates/cxx/Debug/4a1x5r43/obj/arm64-v8a/libollamaccp.so
+  : && /opt/android-sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++ --target=aarch64-none-linux-android24 --sysroot=/opt/android-sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/linux-x86_64/sysroot -fPIC -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++11 -fno-limit-debug-info  -static-libstdc++ -Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--no-undefined-version -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments -shared -Wl,-soname,libollamaccp.so -o /app/app/build/intermediates/cxx/Debug/4a1x5r43/obj/arm64-v8a/libollamaccp.so CMakeFiles/ollamaccp.dir/native-lib.cpp.o  bin/libllama.so  -lcommon  -llog  bin/libggml.so  bin/libggml-cpu.so  bin/libggml-base.so  -latomic -lm && :
+  ld.lld: error: unable to find library -lcommon
+  clang++: error: linker command failed with exit code 1 (use -v to see invocation)
+  ninja: build stopped: subcommand failed.
+
+  C++ build system [build] failed while executing:
+      /usr/bin/ninja \
+        -C \
+        /app/app/.cxx/Debug/4a1x5r43/arm64-v8a \
+        ggml \
+        ggml-base \
+        ggml-cpu \
+        llama \
+        ollamaccp
+    from /app/app
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 39s
+2 actionable tasks: 2 executed
